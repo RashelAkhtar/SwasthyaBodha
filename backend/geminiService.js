@@ -47,7 +47,13 @@ export const analyzeReport = async ({ text, image }) => {
 
     const risk_level = mapRiskLevel(risk_score);
 
-    const confidence = computeConfidence(validated.ambiguity_flags, true);
+    const confidence = computeConfidence({
+      ambiguityFlags: validated.ambiguity_flags,
+      validated: true,
+      primaryFindings: validated.primary_findings,
+      criticalFindings: validated.critical_findings,
+      riskScore: risk_score,
+    });
 
     return {
       primary_findings: validated.primary_findings,
