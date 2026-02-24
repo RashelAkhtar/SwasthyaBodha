@@ -21,7 +21,7 @@ export const analyzeReport = async ({ text, image }) => {
 
   const prompt = buildMultimodalPrompt(text);
 
-  const inputParts = [prompt];
+  const inputParts = [{ text: prompt}];
 
   if (text) inputParts.push({ text });
   if (image) {
@@ -38,18 +38,26 @@ export const analyzeReport = async ({ text, image }) => {
     const result = await model.generateContent(inputParts);
     const rawText = result.response.text();
     const parsed = safeJsonParse(rawText);
-    const validated = validateAndSanitize(parsed);
+    const jsonValid = !!parsed;
+
+    const validated = jsonValid ? validateAndSanitize(parsed) : {
+      primary_findings: [],
+      critical_findings: [],
+      ambiguity_flags: ["invalid model response"],
+      simplified_summary: "AI return invalid structures data.",
+    }
 
     const risk_score = computeRisk(
       validated.primary_findings,
       validated.critical_findings,
+      validated.ambiguity_flags
     );
 
     const risk_level = mapRiskLevel(risk_score);
 
     const confidence = computeConfidence({
       ambiguityFlags: validated.ambiguity_flags,
-      validated: true,
+      validated: jsonValid,
       primaryFindings: validated.primary_findings,
       criticalFindings: validated.critical_findings,
       riskScore: risk_score,
@@ -70,7 +78,7 @@ export const analyzeReport = async ({ text, image }) => {
     return {
       primary_findings: [],
       critical_findings: [],
-      ambiguity_flags: [],
+      ambiguity_flags: ["model invocation failure"],
       simplified_summary: "AI analysis failed.",
       risk_score: 0,
       risk_level: "low",
