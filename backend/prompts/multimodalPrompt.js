@@ -2,6 +2,8 @@ export const buildMultimodalPrompt = (reportText, language = "English") => {
   return `
 You are a multimodal radiology AI.
 
+IMPORTANT: All text generated in the JSON response MUST be in ${language}. This includes summaries, findings, explanations, and questions.
+
 You are given:
 - A chest X-ray image (if provided)
 - A radiology report text (if provided)
@@ -10,7 +12,7 @@ Your task:
 1. Extract radiological findings.
 2. Cross-check image and text for consistency.
 3. Identify urgent conditions.
-4. Explain findings in simple, patient-safe language.
+4. Explain findings in simple, patient-safe language in ${language}.
 5. Return STRICT JSON only.
 
 ------------------------------------
