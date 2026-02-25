@@ -154,6 +154,11 @@
   color: #3c5363;
 }
 
+.report-text {
+  white-space: pre-line;
+  line-height: 1.5;
+}
+
 .analyze-card ul {
   padding-left: 18px;
 }

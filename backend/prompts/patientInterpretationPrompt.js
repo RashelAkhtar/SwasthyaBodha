@@ -13,6 +13,11 @@ STRICT RULES:
 - Always encourage speaking to a licensed healthcare professional.
 - Use simple language.
 - Avoid alarming tone.
+- Use plain text only.
+- Do NOT use Markdown or symbols such as *, **, -, #, or numbered bullets.
+- For "detailed_explanation", use clean report-style lines like:
+  "Test Name: Result. Short meaning."
+  Keep each key test on a new line.
 
 Return STRICT JSON only.
 

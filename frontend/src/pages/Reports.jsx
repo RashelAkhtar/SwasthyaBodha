@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import "../styles/Reports.css";
+import { formatReportText } from "../utils/textFormatting";
 
 function Reports() {
   const [text, setText] = useState("");
@@ -120,20 +121,22 @@ function Reports() {
 
         {result && (
           <div className="interpret-results">
-            <article className="interpret-card interpret-card-wide">
+            {/* <article className="interpret-card interpret-card-wide">
               <h3>Short Summary</h3>
-              <p>{result.plain_language_summary?.short_summary}</p>
-            </article>
+              <p className="report-text">
+                {formatReportText(result.plain_language_summary?.short_summary)}
+              </p>
+            </article> */}
 
             <article className="interpret-card interpret-card-wide">
-              <h3>Detailed Explanation</h3>
-              <p>{result.plain_language_summary?.detailed_explanation}</p>
+              <h3>Report Explanation</h3>
+              <p className="report-text">
+                {formatReportText(
+                  result.plain_language_summary?.detailed_explanation,
+                )}
+              </p>
             </article>
 
-            <article className="interpret-card">
-              <h3>Document Type</h3>
-              <p>{result.document_type || "unknown"}</p>
-            </article>
 
             <article className="interpret-card">
               <h3>Overall Tone</h3>
@@ -170,9 +173,41 @@ function Reports() {
             </article>
 
             <article className="interpret-card interpret-card-wide">
-              <h3>Disclaimer</h3>
-              <p>{result.medical_disclaimer}</p>
+              <h3>What This Means For You</h3>
+              <p className="report-text">
+                {formatReportText(
+                  result.what_this_means_for_you?.what_patients_often_do_next,
+                )}
+              </p>
+              <p className="report-text">
+                {formatReportText(
+                  result.what_this_means_for_you?.monitoring_general_advice,
+                )}
+              </p>
+              <p className="report-text">
+                <strong>Urgent Care Guidance:</strong>{" "}
+                {formatReportText(
+                  result.what_this_means_for_you
+                    ?.when_to_seek_urgent_care_general,
+                )}
+              </p>
             </article>
+
+            <article className="interpret-card">
+              <h3>Follow-up Context</h3>
+              <p className="report-text">
+                {formatReportText(
+                  result.lifestyle_and_followup_context
+                    ?.general_lifestyle_considerations,
+                )}
+              </p>
+              <p className="report-text">
+                {formatReportText(
+                  result.lifestyle_and_followup_context?.importance_of_followup,
+                )}
+              </p>
+            </article>
+
           </div>
         )}
       </section>

@@ -126,6 +126,10 @@
   line-height: 1.5;
 }
 
+.report-text {
+  white-space: pre-line;
+}
+
 .interpret-card ul {
   padding-left: 18px;
 }

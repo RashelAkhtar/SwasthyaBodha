@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import "../styles/XRay.css";
+import { formatReportText } from "../utils/textFormatting";
 
 function XRay() {
   const [text, setText] = useState("");
@@ -126,14 +127,20 @@ function XRay() {
 
         {result && (
           <div className="analyze-results">
-            <article className="analyze-card analyze-card-wide">
+            {/* <article className="analyze-card analyze-card-wide">
               <h3>Patient Summary</h3>
-              <p>{result.simplified_summary}</p>
-            </article>
+              <p className="report-text">
+                {formatReportText(result.simplified_summary)}
+              </p>
+            </article> */}
 
             <article className="analyze-card analyze-card-wide">
-              <h3>Detailed Explanation</h3>
-              <p>{result.plain_language_summary?.detailed_explanation}</p>
+              <h3>Report Explanation</h3>
+              <p className="report-text">
+                {formatReportText(
+                  result.plain_language_summary?.detailed_explanation,
+                )}
+              </p>
             </article>
 
             <article className="analyze-card analyze-card-wide">
@@ -177,7 +184,7 @@ function XRay() {
               </p>
             </article>
 
-            <article className="analyze-card">
+            {/* <article className="analyze-card">
               <h3>Primary Findings</h3>
               {result.primary_findings?.length ? (
                 <ul>
@@ -201,7 +208,7 @@ function XRay() {
               ) : (
                 <p>No critical alerts reported.</p>
               )}
-            </article>
+            </article> */}
 
           </div>
         )}

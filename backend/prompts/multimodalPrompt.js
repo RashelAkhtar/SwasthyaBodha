@@ -67,6 +67,8 @@ RULES
 - Do NOT invent conditions.
 - Do NOT diagnose.
 - Do NOT prescribe treatment.
+- Use plain text only.
+- Do NOT use Markdown or symbols such as *, **, -, #, or numbered bullets.
 - If image and text disagree, add:
   "image-text mismatch" to ambiguity_flags.
 - If image quality is poor:
