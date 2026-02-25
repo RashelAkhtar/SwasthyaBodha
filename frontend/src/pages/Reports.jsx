@@ -76,7 +76,6 @@ function Reports() {
           Medical Document
         </label>
 
-
         <textarea
           id="medical-report-text"
           className="interpret-field"
@@ -121,14 +120,18 @@ function Reports() {
 
         {result && (
           <div className="interpret-results">
-            {/* <article className="interpret-card interpret-card-wide">
-              <h3>Short Summary</h3>
+            <article className="interpret-card interpret-card-wide interpret-card-emergency">
+              <h3>Emergency Information</h3>
               <p className="report-text">
-                {formatReportText(result.plain_language_summary?.short_summary)}
+                <strong>Urgent Care Guidance:</strong>{" "}
+                {formatReportText(
+                  result.what_this_means_for_you
+                    ?.when_to_seek_urgent_care_general,
+                )}
               </p>
-            </article> */}
+            </article>
 
-            <article className="interpret-card interpret-card-wide">
+            <article className="interpret-card interpret-card-wide interpret-card-important">
               <h3>Report Explanation</h3>
               <p className="report-text">
                 {formatReportText(
@@ -137,13 +140,7 @@ function Reports() {
               </p>
             </article>
 
-
-            <article className="interpret-card">
-              <h3>Overall Tone</h3>
-              <p>{result.plain_language_summary?.overall_tone || "neutral"}</p>
-            </article>
-
-            <article className="interpret-card interpret-card-wide">
+            <article className="interpret-card interpret-card-wide interpret-card-standard">
               <h3>Key Findings Explained</h3>
               {result.key_findings_explained?.length ? (
                 <ul>
@@ -159,20 +156,7 @@ function Reports() {
               )}
             </article>
 
-            <article className="interpret-card interpret-card-wide">
-              <h3>Questions To Ask Your Doctor</h3>
-              {result.questions_to_ask_your_doctor?.length ? (
-                <ul>
-                  {result.questions_to_ask_your_doctor.map((question) => (
-                    <li key={question}>{question}</li>
-                  ))}
-                </ul>
-              ) : (
-                <p>No suggested questions were returned.</p>
-              )}
-            </article>
-
-            <article className="interpret-card interpret-card-wide">
+            <article className="interpret-card interpret-card-important">
               <h3>What This Means For You</h3>
               <p className="report-text">
                 {formatReportText(
@@ -184,16 +168,9 @@ function Reports() {
                   result.what_this_means_for_you?.monitoring_general_advice,
                 )}
               </p>
-              <p className="report-text">
-                <strong>Urgent Care Guidance:</strong>{" "}
-                {formatReportText(
-                  result.what_this_means_for_you
-                    ?.when_to_seek_urgent_care_general,
-                )}
-              </p>
             </article>
 
-            <article className="interpret-card">
+            <article className="interpret-card interpret-card-followup">
               <h3>Follow-up Context</h3>
               <p className="report-text">
                 {formatReportText(
@@ -208,6 +185,18 @@ function Reports() {
               </p>
             </article>
 
+            <article className="interpret-card interpret-card-wide interpret-card-followup">
+              <h3>Questions To Ask Your Doctor</h3>
+              {result.questions_to_ask_your_doctor?.length ? (
+                <ul>
+                  {result.questions_to_ask_your_doctor.map((question) => (
+                    <li key={question}>{question}</li>
+                  ))}
+                </ul>
+              ) : (
+                <p>No suggested questions were returned.</p>
+              )}
+            </article>
           </div>
         )}
       </section>

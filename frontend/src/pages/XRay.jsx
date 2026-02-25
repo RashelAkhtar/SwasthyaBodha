@@ -127,14 +127,27 @@ function XRay() {
 
         {result && (
           <div className="analyze-results">
-            {/* <article className="analyze-card analyze-card-wide">
-              <h3>Patient Summary</h3>
+            <article className="analyze-card analyze-card-wide analyze-card-emergency">
+              <h3>Emergency Information</h3>
+              {result.critical_findings?.length ? (
+                <ul>
+                  {result.critical_findings.map((finding) => (
+                    <li key={finding}>{finding}</li>
+                  ))}
+                </ul>
+              ) : (
+                <p>No critical alerts reported.</p>
+              )}
               <p className="report-text">
-                {formatReportText(result.simplified_summary)}
+                <strong>Urgent Care Guidance:</strong>{" "}
+                {formatReportText(
+                  result.what_this_means_for_you
+                    ?.when_to_seek_urgent_care_general,
+                )}
               </p>
-            </article> */}
+            </article>
 
-            <article className="analyze-card analyze-card-wide">
+            <article className="analyze-card analyze-card-wide analyze-card-important">
               <h3>Report Explanation</h3>
               <p className="report-text">
                 {formatReportText(
@@ -143,22 +156,36 @@ function XRay() {
               </p>
             </article>
 
-            <article className="analyze-card analyze-card-wide">
+            <article className="analyze-card analyze-card-wide analyze-card-important">
               <h3>What This Means For You</h3>
-              <p>
-                {result.what_this_means_for_you?.what_patients_often_do_next}
+              <p className="report-text">
+                {formatReportText(
+                  result.what_this_means_for_you?.what_patients_often_do_next,
+                )}
               </p>
-              <p>{result.what_this_means_for_you?.monitoring_general_advice}</p>
-              <p>
-                <strong>Urgent Care Guidance:</strong>{" "}
-                {
-                  result.what_this_means_for_you
-                    ?.when_to_seek_urgent_care_general
-                }
+              <p className="report-text">
+                {formatReportText(
+                  result.what_this_means_for_you?.monitoring_general_advice,
+                )}
               </p>
             </article>
 
-            <article className="analyze-card">
+            <article className="analyze-card analyze-card-standard">
+              <h3>Follow-up Context</h3>
+              <p className="report-text">
+                {formatReportText(
+                  result.lifestyle_and_followup_context
+                    ?.general_lifestyle_considerations,
+                )}
+              </p>
+              <p className="report-text">
+                {formatReportText(
+                  result.lifestyle_and_followup_context?.importance_of_followup,
+                )}
+              </p>
+            </article>
+
+            <article className="analyze-card analyze-card-followup">
               <h3>Questions To Ask Your Doctor</h3>
               {result.questions_to_ask_your_doctor?.length ? (
                 <ul>
@@ -170,45 +197,6 @@ function XRay() {
                 <p>No suggested questions were returned.</p>
               )}
             </article>
-
-            <article className="analyze-card">
-              <h3>Follow-up Context</h3>
-              <p>
-                {
-                  result.lifestyle_and_followup_context
-                    ?.general_lifestyle_considerations
-                }
-              </p>
-              <p>
-                {result.lifestyle_and_followup_context?.importance_of_followup}
-              </p>
-            </article>
-
-            {/* <article className="analyze-card">
-              <h3>Primary Findings</h3>
-              {result.primary_findings?.length ? (
-                <ul>
-                  {result.primary_findings.map((finding) => (
-                    <li key={finding}>{finding}</li>
-                  ))}
-                </ul>
-              ) : (
-                <p>No primary findings reported.</p>
-              )}
-            </article>
-
-            <article className="analyze-card analyze-card-critical">
-              <h3>Critical Alerts</h3>
-              {result.critical_findings?.length ? (
-                <ul>
-                  {result.critical_findings.map((finding) => (
-                    <li key={finding}>{finding}</li>
-                  ))}
-                </ul>
-              ) : (
-                <p>No critical alerts reported.</p>
-              )}
-            </article> */}
 
           </div>
         )}

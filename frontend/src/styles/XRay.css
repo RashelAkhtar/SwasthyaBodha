@@ -137,6 +137,7 @@
 
 .analyze-card {
   border: 1px solid #d6e2ea;
+  border-left: 5px solid #8ca8ba;
   border-radius: 12px;
   padding: 14px;
   background: #fbfdff;
@@ -152,6 +153,7 @@
 .analyze-card ul {
   margin: 8px 0 0;
   color: #3c5363;
+  line-height: 1.5;
 }
 
 .report-text {
@@ -197,9 +199,28 @@
   transition: width 280ms ease;
 }
 
-.analyze-card-critical {
-  border-color: #f1c5cd;
-  background: #fff8f9;
+.analyze-card-emergency {
+  border-color: #f0b8be;
+  border-left-color: #cf2f45;
+  background: #fff4f5;
+}
+
+.analyze-card-important {
+  border-color: #efdfb0;
+  border-left-color: #b98400;
+  background: #fff9ed;
+}
+
+.analyze-card-standard {
+  border-color: #c8dbe6;
+  border-left-color: #2e7da8;
+  background: #f7fcff;
+}
+
+.analyze-card-followup {
+  border-color: #c7decf;
+  border-left-color: #3d8a5b;
+  background: #f5fcf7;
 }
 
 .analyze-card-wide {
