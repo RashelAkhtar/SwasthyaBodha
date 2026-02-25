@@ -35,13 +35,20 @@ const pcm16ToWavBlob = (pcmBytes, sampleRate = 24000) => {
   return new Blob([buffer], { type: "audio/wav" });
 };
 
-function VoiceOutputToggle({ text, language, t, className = "" }) {
+function VoiceOutputToggle({ text, language, t, className = "", autoPlay = false, onReady, onEnded }) {
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const audioRef = useRef(null);
   const audioUrlRef = useRef("");
   const cacheRef = useRef(new Map());
+  const lastPlayedText = useRef("");
+  useEffect(() => {
+    if (autoPlay && text?.trim() && text !== lastPlayedText.current) {
+      lastPlayedText.current = text;
+      toggleSpeech();
+    }
+  }, [autoPlay, text]);
 
   useEffect(() => {
     return () => {
@@ -86,7 +93,13 @@ function VoiceOutputToggle({ text, language, t, className = "" }) {
       }
       const audio = new Audio(cacheRef.current.get(cacheKey));
       audioRef.current = audio;
-      audio.onended = () => setIsSpeaking(false);
+      audio.onended = () => {
+        setIsSpeaking(false);
+        if (onEnded) onEnded();
+      };
+      audio.oncanplaythrough = () => {
+        if (onReady) onReady();
+      };
       audio.onerror = () => {
         setIsSpeaking(false);
         setError(t("voice_failed"));
@@ -151,7 +164,13 @@ function VoiceOutputToggle({ text, language, t, className = "" }) {
 
       const audio = new Audio(url);
       audioRef.current = audio;
-      audio.onended = () => setIsSpeaking(false);
+      audio.onended = () => {
+        setIsSpeaking(false);
+        if (onEnded) onEnded();
+      };
+      audio.oncanplaythrough = () => {
+        if (onReady) onReady();
+      };
       audio.onerror = () => {
         setIsSpeaking(false);
         setError(t("voice_failed"));

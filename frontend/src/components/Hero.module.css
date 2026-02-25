@@ -1,0 +1,175 @@
+.heroSection {
+    padding: 2rem 0 4rem 0;
+    overflow: hidden;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+    display: grid;
+    grid-template-columns: 1fr 1.3fr;
+    gap: 2rem;
+    align-items: center;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.tagline {
+    color: var(--color-medical-blue-dark);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 0.875rem;
+}
+
+.title {
+    font-size: 3.5rem;
+    line-height: 1.1;
+    letter-spacing: -1px;
+}
+
+.description {
+    font-size: 1.25rem;
+    color: var(--color-text-secondary);
+    max-width: 90%;
+}
+
+.actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.disclaimerBox {
+    margin-top: 2rem;
+    background-color: var(--color-clarity-yellow-bg);
+    border-left: 4px solid var(--color-clarity-yellow);
+    padding: 1rem;
+    border-radius: 0 0.5rem 0.5rem 0;
+}
+
+.disclaimer {
+    font-size: 0.875rem;
+    color: var(--color-text-secondary);
+    line-height: 1.5;
+}
+
+.disclaimer strong {
+    color: var(--color-clarity-yellow);
+    filter: brightness(0.8);
+}
+
+/* Image Slider Styling */
+.visualSupport {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.visualSupport::before {
+    content: '';
+    position: absolute;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, var(--color-medical-blue-light) 0%, rgba(255, 255, 255, 0) 70%);
+    z-index: -1;
+    border-radius: 50%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.sliderContainer {
+    position: relative;
+    width: 100%;
+    max-width: 800px;
+    height: 500px;
+    /* Explicit height ensures strict bounds */
+    border-radius: 1rem;
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+    border: 4px solid white;
+    background: white;
+    /* Fix for some Safari versions ignoring overflow: hidden on border-radius with transforms */
+    -webkit-mask-image: -webkit-radial-gradient(white, black);
+    mask-image: radial-gradient(white, black);
+}
+
+.slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.activeSlide {
+    z-index: 10;
+}
+
+.slideImage {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.sliderNavigation {
+    position: absolute;
+    bottom: 1rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 0.5rem;
+    z-index: 20;
+    background: rgba(255, 255, 255, 0.4);
+    padding: 0.5rem 0.75rem;
+    border-radius: 2rem;
+    backdrop-filter: blur(4px);
+}
+
+.sliderDot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: white;
+    border: none;
+    cursor: pointer;
+    opacity: 0.6;
+    transition: all 0.3s;
+}
+
+.activeDot {
+    opacity: 1;
+    background: var(--color-medical-blue);
+    transform: scale(1.2);
+}
+
+@media (max-width: 1024px) {
+    .title {
+        font-size: 2.75rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+    }
+
+    .heroSection {
+        padding: 3rem 0;
+    }
+
+    .title {
+        font-size: 2.5rem;
+    }
+}

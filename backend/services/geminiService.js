@@ -16,12 +16,13 @@ const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
 export const analyzeReport = async ({ text, image, language = "English" }) => {
   const model = genAI.getGenerativeModel({
-    model: "gemini-3-flash-preview",
+    model: "gemini-2.5-flash",
+    generationConfig: { responseMimeType: "application/json" },
   });
 
   const prompt = buildMultimodalPrompt(text, language);
 
-  const inputParts = [{ text: prompt}];
+  const inputParts = [{ text: prompt }];
 
   if (text) inputParts.push({ text });
   if (image) {

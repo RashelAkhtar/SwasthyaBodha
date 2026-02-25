@@ -1,4 +1,17 @@
 .env
+.env.*
+!.env.example
+
+# Temporary Test Scripts
+testFirstKey.js
+testModel.js
+testVoice.js
+testVoiceAssamese.js
+
+# Logs and Data
+out.txt
+eng.traineddata
+uploads/
 
 # Logs
 logs
@@ -13,6 +26,9 @@ node_modules
 dist
 dist-ssr
 *.local
+.env
+.env.*
+!.env.example
 
 # Editor directories and files
 .vscode/*
