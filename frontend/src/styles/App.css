@@ -1,48 +1,132 @@
-@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
 
 :root {
-  --app-bg: #f3f7f9;
-  --app-text: #122433;
-  --app-muted: #5d7282;
-  --app-line: #d7e3ea;
-  --app-card: #ffffff;
-  --app-primary: #0f7db7;
-  --app-primary-strong: #0b628f;
-  --app-accent: #dff3fb;
+  /* Medical Core Colors */
+  --color-medical-blue: #0ea5e9;
+  --color-medical-blue-dark: #0284c7;
+  --color-medical-blue-light: #e0f2fe;
+
+  /* Clarity Colors */
+  --color-clarity-green: #22c55e;
+  --color-clarity-green-bg: #dcfce7;
+  --color-clarity-yellow: #eab308;
+  --color-clarity-yellow-bg: #fef9c3;
+  --color-clarity-red: #ef4444;
+  --color-clarity-red-bg: #fee2e2;
+
+  /* Neutral & Layout */
+  --color-background: #ffffff;
+  --color-text-primary: #1e293b;
+  --color-text-secondary: #64748b;
+  --color-border: #cbd5e1;
+
+  /* Elevation */
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+
+  /* Gradients */
+  --bg-gradient: linear-gradient(135deg, #f0f9ff 0%, #ffffff 100%);
 }
 
 * {
   box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 html,
 body,
 #root {
-  margin: 0;
-  min-height: 100%;
-}
-
-body {
-  font-family: "Manrope", "Segoe UI", sans-serif;
-  color: var(--app-text);
-  background:
-    radial-gradient(circle at 10% 8%, #d8edf8 0%, transparent 34%),
-    radial-gradient(circle at 88% 12%, #e2f4ea 0%, transparent 28%),
-    var(--app-bg);
-}
-
-.app-root {
   min-height: 100vh;
 }
 
-.app-content {
-  max-width: 1140px;
-  margin: 0 auto;
-  padding: 28px 20px 36px;
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  color: var(--color-text-primary);
+  background: var(--bg-gradient);
+  line-height: 1.6;
 }
 
-@media (max-width: 700px) {
-  .app-content {
-    padding: 20px 14px 28px;
-  }
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Typography Utilities */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: var(--color-text-primary);
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.text-gradient {
+  background: linear-gradient(90deg, var(--color-medical-blue), var(--color-medical-blue-dark));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  transition: all 0.2s;
+  cursor: pointer;
+  border: none;
+}
+
+.btn-primary {
+  background-color: var(--color-medical-blue);
+  color: white;
+  box-shadow: var(--shadow-md);
+}
+
+.btn-primary:hover {
+  background-color: var(--color-medical-blue-dark);
+  transform: translateY(-1px);
+}
+
+.btn-secondary {
+  background-color: white;
+  color: var(--color-text-primary);
+  border: 1px solid var(--color-border);
+}
+
+.btn-secondary:hover {
+  background-color: var(--color-medical-blue-light);
+  border-color: var(--color-medical-blue);
+}
+
+/* Glassmorphism utility */
+.glass {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+/* Content Container for Vite app compatibility */
+.app-root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.app-main {
+  flex: 1;
+}
+
+.page-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
 }

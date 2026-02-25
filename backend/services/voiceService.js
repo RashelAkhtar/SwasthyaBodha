@@ -15,6 +15,12 @@ const voiceByLanguage = {
   Assamese: "Kore",
 };
 
+const languageCodeByLanguage = {
+  English: "en-US",
+  Hindi: "hi-IN",
+  Assamese: "as-IN",
+};
+
 const VOICE_CACHE_TTL_MS = 20 * 60 * 1000;
 const voiceCache = new Map();
 
@@ -50,13 +56,16 @@ const pcm16ToWavBuffer = (pcmBuffer, sampleRate = 24000, channels = 1) => {
 };
 
 export const generateVoiceAudio = async ({ text, language = "English" }) => {
-  const apiKey = process.env.GEMINI_API_KEY_VOICE;
+  // Use voice key if present, fallback to primary key
+  const apiKey = process.env.GEMINI_API_KEY_VOICE || process.env.GEMINI_API_KEY;
   if (!apiKey) {
     throw new Error("GEMINI_API_KEY is missing.");
   }
 
-  const model = modelByLanguage[language] || modelByLanguage.English;
+  const model = modelByLanguage[language] || "gemini-1.5-flash"; // Fallback to 1.5-flash for broader support
   const voiceName = voiceByLanguage[language] || voiceByLanguage.English;
+  const languageCode = languageCodeByLanguage[language] || "en-US";
+
   const inputText = text.slice(0, 7000);
   const cacheKey = crypto
     .createHash("sha1")
@@ -68,6 +77,32 @@ export const generateVoiceAudio = async ({ text, language = "English" }) => {
     return cached.payload;
   }
 
+  const requestBody = {
+    contents: [
+      {
+        parts: [{ text: inputText }],
+      },
+    ],
+    generationConfig: {
+      responseModalities: ["AUDIO"],
+      speechConfig: {
+        voiceConfig: {
+          prebuiltVoiceConfig: {
+            voiceName,
+          },
+        },
+      },
+    },
+  };
+
+  // If not English, sometimes specific language instructions in the config help
+  if (language !== "English") {
+    // Some API versions support language codes in speechConfig
+    requestBody.generationConfig.speechConfig.languageCode = languageCode;
+  }
+
+  console.log(`Generating voice for ${language} using model ${model} and voice ${voiceName}...`);
+
   const response = await fetch(
     `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`,
     {
@@ -75,28 +110,13 @@ export const generateVoiceAudio = async ({ text, language = "English" }) => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({
-        contents: [
-          {
-            parts: [{ text: inputText }],
-          },
-        ],
-        generationConfig: {
-          responseModalities: ["AUDIO"],
-          speechConfig: {
-            voiceConfig: {
-              prebuiltVoiceConfig: {
-                voiceName,
-              },
-            },
-          },
-        },
-      }),
-    },
+      body: JSON.stringify(requestBody),
+    }
   );
 
   if (!response.ok) {
     const errText = await response.text();
+    console.error(`Gemini TTS error (${response.status}) for ${language}:`, errText);
     throw new Error(`Gemini TTS error (${response.status}): ${errText}`);
   }
 
@@ -105,6 +125,7 @@ export const generateVoiceAudio = async ({ text, language = "English" }) => {
   const audioPart = parts.find((part) => part.inlineData?.data);
 
   if (!audioPart?.inlineData?.data) {
+    console.warn("No audio data returned. Response parts types:", parts.map(p => Object.keys(p)));
     throw new Error("No audio data returned from Gemini TTS.");
   }
 

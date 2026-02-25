@@ -1,77 +1,61 @@
-import { NavLink } from "react-router-dom";
-import "../styles/Navbar.css";
-import { useLanguage } from "../context/LanguageContext";
+import { Link, useLocation } from 'react-router-dom';
+import { useLanguage } from '../context/LanguageContext';
+import styles from './Navbar.module.css';
 
-function Navbar() {
-  const { language, setLanguage, t, supportedLanguages } = useLanguage();
+export default function Navbar() {
+  const location = useLocation();
+  const { language, setLanguage, t } = useLanguage();
 
-  // const scrollDown = () => {
-  //   window.scrollBy({ top: window.innerHeight, behavior: "smooth" });
-  // };
+  const isActive = (path) => {
+    return location.pathname === path ? styles.active : '';
+  };
 
   return (
-    <header className="nav-shell">
-      <div className="nav-inner">
-        <div className="nav-brand">
-          <span className="nav-brand-mark" aria-hidden="true">
-            +
-          </span>
-          <div>
-            <p className="nav-brand-title">MedAI Radiology</p>
-            <p className="nav-brand-subtitle">{t("nav_brand_subtitle")}</p>
-          </div>
+    <nav className={`${styles.navbar} glass`}>
+      <div className={styles.container}>
+        <div className={styles.logo}>
+          <Link to="/">
+            <span className="text-gradient">SwasthyaBodha</span>
+          </Link>
         </div>
 
-        <nav className="nav-menu">
-          <NavLink
-            to="/"
-            className={({ isActive }) =>
-              `nav-menu-link ${isActive ? "is-active" : ""}`
-            }
-          >
-            {t("nav_home")}
-          </NavLink>
-          <NavLink
-            to="/xray"
-            className={({ isActive }) =>
-              `nav-menu-link ${isActive ? "is-active" : ""}`
-            }
-          >
-            {t("nav_xray")}
-          </NavLink>
-          <NavLink
-            to="/reports"
-            className={({ isActive }) =>
-              `nav-menu-link ${isActive ? "is-active" : ""}`
-            }
-          >
-            {t("nav_reports")}
-          </NavLink>
-        </nav>
-
-        <div className="nav-controls">
-          <label className="nav-language-label" htmlFor="nav-language">
-            {t("nav_language_label")}
-          </label>
-          <select
-            id="nav-language"
-            className="nav-language-select"
-            value={language}
-            onChange={(e) => setLanguage(e.target.value)}
-          >
-            {supportedLanguages.map((item) => (
-              <option key={item} value={item}>
-                {item}
-              </option>
-            ))}
-          </select>
-          {/* <button type="button" className="nav-scroll-btn" onClick={scrollDown}>
-            {t("nav_scroll_down")}
-          </button> */}
-        </div>
+        <ul className={styles.navLinks}>
+          <li>
+            <Link to="/" className={`${styles.link} ${isActive('/')}`}>
+              {t("nav_home")}
+            </Link>
+          </li>
+          <li>
+            <Link to="/xray" className={`${styles.link} ${isActive('/xray')}`}>
+              {t("nav_xray")}
+            </Link>
+          </li>
+          <li>
+            <Link to="/reports" className={`${styles.link} ${isActive('/reports')}`}>
+              {t("nav_reports")}
+            </Link>
+          </li>
+          <li>
+            <Link to="/about" className={`${styles.link} ${isActive('/about')}`}>
+              {t("about_nav")}
+            </Link>
+          </li>
+          <li>
+            <div className={styles.languageSelector}>
+              <span className={styles.globeIcon}>🌐</span>
+              <select
+                className={styles.select}
+                value={language}
+                onChange={(e) => setLanguage(e.target.value)}
+              >
+                <option value="English">English</option>
+                <option value="Hindi">हिंदी (Hindi)</option>
+                <option value="Assamese">অসমীয়া (Assamese)</option>
+              </select>
+            </div>
+          </li>
+        </ul>
       </div>
-    </header>
+    </nav>
   );
 }
-
-export default Navbar;
