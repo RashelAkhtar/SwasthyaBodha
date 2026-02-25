@@ -42,6 +42,12 @@ Simplified Summary:
 - Explain what is seen.
 - State if urgent care may be needed.
 
+"language_metadata": {
+    "original_language": "string",
+    "output_language": "${language}",
+    "reading_level_estimate": "grade_6"
+  }
+
 ------------------------------------
 Radiology Report:
 ${reportText || "No report provided."}

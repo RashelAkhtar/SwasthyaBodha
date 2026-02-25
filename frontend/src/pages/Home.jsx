@@ -1,44 +1,41 @@
 import { Link } from "react-router-dom";
+import "../styles/Home.css";
 
 function Home() {
   return (
-    <section className="home-layout">
-      <div className="hero-card">
-        <p className="eyebrow">Radiology Workflow Assistant</p>
-        <h1>Clean, structured chest X-ray risk analysis in seconds</h1>
-        <p className="hero-copy">
-          Upload an X-ray image, report text, or both. MedAI extracts key
-          findings, highlights critical alerts, and generates a patient-friendly
-          summary for faster clinical review.
+    <section className="home-page">
+      <div className="home-hero">
+        <p className="home-kicker">Radiology Workflow Assistant</p>
+        <h1>Fast, structured radiology review with patient-ready output</h1>
+        <p>
+          Upload X-ray data and report text for risk-focused analysis, then
+          generate plain-language interpretation for patient communication.
         </p>
-        <div className="hero-actions">
-          <Link className="btn btn-primary" to="/analyze">
+
+        <div className="home-actions">
+          <Link className="home-btn home-btn-primary" to="/analyze">
             Start Analysis
+          </Link>
+          <Link className="home-btn home-btn-ghost" to="/analyze-report">
+            Interpret Report
           </Link>
         </div>
       </div>
 
-      <div className="info-grid">
-        <article className="info-card">
+      <div className="home-grid">
+        <article className="home-card">
           <h3>Structured Findings</h3>
-          <p>
-            Primary findings, ambiguity flags, and risk level are grouped for
-            quick triage.
-          </p>
+          <p>Risk level, confidence, and findings are grouped for quick triage.</p>
         </article>
-        <article className="info-card">
-          <h3>Clinical Prioritization</h3>
-          <p>
-            Critical findings are surfaced first so urgent cases can be
-            escalated rapidly.
-          </p>
+
+        <article className="home-card">
+          <h3>Critical Alerting</h3>
+          <p>Urgent observations are surfaced first to support rapid escalation.</p>
         </article>
-        <article className="info-card">
-          <h3>Patient-Friendly Summary</h3>
-          <p>
-            Complex radiology language is translated into short, understandable
-            text.
-          </p>
+
+        <article className="home-card">
+          <h3>Patient Clarity</h3>
+          <p>Medical language is translated into easy-to-understand explanations.</p>
         </article>
       </div>
     </section>

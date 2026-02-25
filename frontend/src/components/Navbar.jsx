@@ -1,29 +1,44 @@
 import { NavLink } from "react-router-dom";
+import "../styles/Navbar.css";
 
 function Navbar() {
   return (
-    <header className="topbar">
-      <div className="topbar-inner">
-        <div className="brand-block">
-          <div className="brand-mark">+</div>
+    <header className="nav-shell">
+      <div className="nav-inner">
+        <div className="nav-brand">
+          <span className="nav-brand-mark" aria-hidden="true">
+            +
+          </span>
           <div>
-            <p className="brand-title">MedAI Radiology</p>
-            <p className="brand-subtitle">Clinical Decision Support</p>
+            <p className="nav-brand-title">MedAI Radiology</p>
+            <p className="nav-brand-subtitle">Clinical Decision Support</p>
           </div>
         </div>
 
-        <nav className="nav-links">
+        <nav className="nav-menu">
           <NavLink
             to="/"
-            className={({ isActive }) => `nav-link ${isActive ? "active" : ""}`}
+            className={({ isActive }) =>
+              `nav-menu-link ${isActive ? "is-active" : ""}`
+            }
           >
             Home
           </NavLink>
           <NavLink
             to="/analyze"
-            className={({ isActive }) => `nav-link ${isActive ? "active" : ""}`}
+            className={({ isActive }) =>
+              `nav-menu-link ${isActive ? "is-active" : ""}`
+            }
           >
             Analyze
+          </NavLink>
+          <NavLink
+            to="/analyze-report"
+            className={({ isActive }) =>
+              `nav-menu-link ${isActive ? "is-active" : ""}`
+            }
+          >
+            Interpret
           </NavLink>
         </nav>
       </div>

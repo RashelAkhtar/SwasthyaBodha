@@ -1,5 +1,3 @@
-import { validate } from "uuid";
-
 // weighted base risk
 const severityDictionary = {
   normal: 0.05,

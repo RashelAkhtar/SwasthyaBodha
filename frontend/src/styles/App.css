@@ -1,0 +1,48 @@
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap");
+
+:root {
+  --app-bg: #f3f7f9;
+  --app-text: #122433;
+  --app-muted: #5d7282;
+  --app-line: #d7e3ea;
+  --app-card: #ffffff;
+  --app-primary: #0f7db7;
+  --app-primary-strong: #0b628f;
+  --app-accent: #dff3fb;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  margin: 0;
+  min-height: 100%;
+}
+
+body {
+  font-family: "Manrope", "Segoe UI", sans-serif;
+  color: var(--app-text);
+  background:
+    radial-gradient(circle at 10% 8%, #d8edf8 0%, transparent 34%),
+    radial-gradient(circle at 88% 12%, #e2f4ea 0%, transparent 28%),
+    var(--app-bg);
+}
+
+.app-root {
+  min-height: 100vh;
+}
+
+.app-content {
+  max-width: 1140px;
+  margin: 0 auto;
+  padding: 28px 20px 36px;
+}
+
+@media (max-width: 700px) {
+  .app-content {
+    padding: 20px 14px 28px;
+  }
+}
