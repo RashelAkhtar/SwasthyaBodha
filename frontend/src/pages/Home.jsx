@@ -14,10 +14,10 @@ function Home() {
 
         <div className="home-actions">
           <Link className="home-btn home-btn-primary" to="/xray">
-            Start Analysis
+            X-Ray Summary
           </Link>
           <Link className="home-btn home-btn-ghost" to="/reports">
-            Interpret Report
+            Report Summary
           </Link>
         </div>
       </div>

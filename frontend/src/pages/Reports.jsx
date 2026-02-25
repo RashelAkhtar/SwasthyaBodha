@@ -105,13 +105,12 @@ function Reports() {
 
       <section className="interpret-pane interpret-pane-output">
         <header className="interpret-header">
-          <h2>Interpretation Output</h2>
-          <p>Generated from `/interpret` in clear non-technical language.</p>
+          <h2>Report Summary</h2>
         </header>
 
         {!result && !loading && (
           <div className="interpret-empty">
-            The patient interpretation result will appear here.
+            The patient report result will appear here.
           </div>
         )}
 
