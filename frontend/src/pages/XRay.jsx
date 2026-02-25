@@ -2,10 +2,11 @@ import { useState } from "react";
 import axios from "axios";
 import "../styles/XRay.css";
 import { formatReportText } from "../utils/textFormatting";
+import { useLanguage } from "../context/LanguageContext";
 
 function XRay() {
+  const { language, t } = useLanguage();
   const [text, setText] = useState("");
-  const [language, setLanguage] = useState("English");
   const [image, setImage] = useState(null);
   const [preview, setPreview] = useState(null);
   const [result, setResult] = useState(null);
@@ -22,7 +23,7 @@ function XRay() {
 
   const analyzeReport = async () => {
     if (!text && !image) {
-      setError("Please provide report text or upload an X-ray image.");
+      setError(t("xray_input_error"));
       return;
     }
 
@@ -41,7 +42,7 @@ function XRay() {
       setResult(res.data);
     } catch (err) {
       console.error("Error:", err);
-      setError("Could not analyze input. Please try again.");
+      setError(t("xray_request_error"));
     }
 
     setLoading(false);
@@ -51,38 +52,24 @@ function XRay() {
     <section className="analyze-page">
       <section className="analyze-pane analyze-pane-input">
         <header className="analyze-header">
-          <h1>Radiology Analysis</h1>
-          <p>Submit report text and/or X-ray image for AI risk assessment.</p>
+          <h1>{t("xray_title")}</h1>
+          <p>{t("xray_subtitle")}</p>
         </header>
 
-        <label className="analyze-label" htmlFor="xray-language">
-          Output Language
-        </label>
-        <select
-          id="xray-language"
-          className="analyze-select"
-          value={language}
-          onChange={(e) => setLanguage(e.target.value)}
-        >
-          <option value="English">English</option>
-          <option value="Assamese">Assamese</option>
-          <option value="Hindi">Hindi</option>
-        </select>
-
         <label className="analyze-label" htmlFor="report-text">
-          Radiology Report
+          {t("xray_report_label")}
         </label>
         <textarea
           id="report-text"
           className="analyze-field"
           rows="8"
-          placeholder="Paste report text (optional)"
+          placeholder={t("xray_report_placeholder")}
           value={text}
           onChange={(e) => setText(e.target.value)}
         />
 
         <label className="analyze-label" htmlFor="image-input">
-          X-ray Image
+          {t("xray_image_label")}
         </label>
         <input
           id="image-input"
@@ -94,10 +81,10 @@ function XRay() {
 
         {preview ? (
           <div className="analyze-preview">
-            <img src={preview} alt="X-ray preview" />
+            <img src={preview} alt={t("xray_image_preview_alt")} />
           </div>
         ) : (
-          <div className="analyze-placeholder">No image uploaded</div>
+          <div className="analyze-placeholder">{t("xray_no_image")}</div>
         )}
 
         {error && <p className="analyze-error">{error}</p>}
@@ -107,28 +94,28 @@ function XRay() {
           onClick={analyzeReport}
           disabled={loading}
         >
-          {loading ? "Analyzing..." : "Analyze"}
+          {loading ? t("xray_analyzing") : t("xray_analyze")}
         </button>
       </section>
 
       <section className="analyze-pane analyze-pane-output">
         <header className="analyze-header">
-          <h2>Analysis Output</h2>
-          <p>Review AI findings and identify urgent conditions.</p>
+          <h2>{t("xray_output_title")}</h2>
+          <p>{t("xray_output_subtitle")}</p>
         </header>
 
         {!result && !loading && (
           <div className="analyze-empty">
-            Results will appear here after you run an analysis.
+            {t("xray_output_empty")}
           </div>
         )}
 
-        {loading && <div className="analyze-empty">Running analysis...</div>}
+        {loading && <div className="analyze-empty">{t("xray_output_loading")}</div>}
 
         {result && (
           <div className="analyze-results">
             <article className="analyze-card analyze-card-wide analyze-card-emergency">
-              <h3>Emergency Information</h3>
+              <h3>{t("xray_emergency_title")}</h3>
               {result.critical_findings?.length ? (
                 <ul>
                   {result.critical_findings.map((finding) => (
@@ -136,10 +123,10 @@ function XRay() {
                   ))}
                 </ul>
               ) : (
-                <p>No critical alerts reported.</p>
+                <p>{t("xray_no_critical")}</p>
               )}
               <p className="report-text">
-                <strong>Urgent Care Guidance:</strong>{" "}
+                <strong>{t("xray_urgent_care")}</strong>{" "}
                 {formatReportText(
                   result.what_this_means_for_you
                     ?.when_to_seek_urgent_care_general,
@@ -148,7 +135,7 @@ function XRay() {
             </article>
 
             <article className="analyze-card analyze-card-wide analyze-card-important">
-              <h3>Report Explanation</h3>
+              <h3>{t("xray_report_explanation")}</h3>
               <p className="report-text">
                 {formatReportText(
                   result.plain_language_summary?.detailed_explanation,
@@ -157,7 +144,7 @@ function XRay() {
             </article>
 
             <article className="analyze-card analyze-card-wide analyze-card-important">
-              <h3>What This Means For You</h3>
+              <h3>{t("xray_what_this_means")}</h3>
               <p className="report-text">
                 {formatReportText(
                   result.what_this_means_for_you?.what_patients_often_do_next,
@@ -171,7 +158,7 @@ function XRay() {
             </article>
 
             <article className="analyze-card analyze-card-standard">
-              <h3>Follow-up Context</h3>
+              <h3>{t("xray_follow_up")}</h3>
               <p className="report-text">
                 {formatReportText(
                   result.lifestyle_and_followup_context
@@ -186,7 +173,7 @@ function XRay() {
             </article>
 
             <article className="analyze-card analyze-card-followup">
-              <h3>Questions To Ask Your Doctor</h3>
+              <h3>{t("xray_questions")}</h3>
               {result.questions_to_ask_your_doctor?.length ? (
                 <ul>
                   {result.questions_to_ask_your_doctor.map((question) => (
@@ -194,7 +181,7 @@ function XRay() {
                   ))}
                 </ul>
               ) : (
-                <p>No suggested questions were returned.</p>
+                <p>{t("xray_no_questions")}</p>
               )}
             </article>
 

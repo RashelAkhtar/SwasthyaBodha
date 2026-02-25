@@ -2,10 +2,11 @@ import { useState } from "react";
 import axios from "axios";
 import "../styles/Reports.css";
 import { formatReportText } from "../utils/textFormatting";
+import { useLanguage } from "../context/LanguageContext";
 
 function Reports() {
+  const { language, t } = useLanguage();
   const [text, setText] = useState("");
-  const [language, setLanguage] = useState("English");
   const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -13,7 +14,7 @@ function Reports() {
 
   const interpretReport = async () => {
     if (!text.trim() && !file) {
-      setError("Please paste text or upload a report.");
+      setError(t("reports_input_error"));
       return;
     }
 
@@ -41,7 +42,7 @@ function Reports() {
       setResult(res.data);
     } catch (err) {
       console.error("Interpretation error:", err);
-      setError("Could not interpret report.");
+      setError(t("reports_request_error"));
     } finally {
       setLoading(false);
     }
@@ -51,41 +52,24 @@ function Reports() {
     <section className="interpret-page">
       <section className="interpret-pane interpret-pane-input">
         <header className="interpret-header">
-          <h1>Patient Report Interpreter</h1>
-          <p>
-            Convert medical document wording into simple, patient-safe
-            explanation.
-          </p>
+          <h1>{t("reports_title")}</h1>
+          <p>{t("reports_subtitle")}</p>
         </header>
 
-        <label className="interpret-label" htmlFor="patient-language">
-          Output Language
-        </label>
-        <select
-          id="patient-language"
-          className="interpret-select"
-          value={language}
-          onChange={(e) => setLanguage(e.target.value)}
-        >
-          <option value="English">English</option>
-          <option value="Assamese">Assamese</option>
-          <option value="Hindi">Hindi</option>
-        </select>
-
         <label className="interpret-label" htmlFor="medical-report-text">
-          Medical Document
+          {t("reports_document_label")}
         </label>
 
         <textarea
           id="medical-report-text"
           className="interpret-field"
           rows="12"
-          placeholder="Paste radiology report, lab report, discharge note, or prescription text..."
+          placeholder={t("reports_document_placeholder")}
           value={text}
           onChange={(e) => setText(e.target.value)}
         />
 
-        <label className="field-label">Upload PDF or Image</label>
+        <label className="field-label">{t("reports_upload_label")}</label>
         <input
           type="file"
           accept=".pdf,image/*"
@@ -99,31 +83,31 @@ function Reports() {
           onClick={interpretReport}
           disabled={loading}
         >
-          {loading ? "Interpreting..." : "Interpret Report"}
+          {loading ? t("reports_interpreting") : t("reports_interpret")}
         </button>
       </section>
 
       <section className="interpret-pane interpret-pane-output">
         <header className="interpret-header">
-          <h2>Report Summary</h2>
+          <h2>{t("reports_output_title")}</h2>
         </header>
 
         {!result && !loading && (
           <div className="interpret-empty">
-            The patient report result will appear here.
+            {t("reports_output_empty")}
           </div>
         )}
 
         {loading && (
-          <div className="interpret-empty">Generating interpretation...</div>
+          <div className="interpret-empty">{t("reports_output_loading")}</div>
         )}
 
         {result && (
           <div className="interpret-results">
             <article className="interpret-card interpret-card-wide interpret-card-emergency">
-              <h3>Emergency Information</h3>
+              <h3>{t("reports_emergency_title")}</h3>
               <p className="report-text">
-                <strong>Urgent Care Guidance:</strong>{" "}
+                <strong>{t("reports_urgent_care")}</strong>{" "}
                 {formatReportText(
                   result.what_this_means_for_you
                     ?.when_to_seek_urgent_care_general,
@@ -132,7 +116,7 @@ function Reports() {
             </article>
 
             <article className="interpret-card interpret-card-wide interpret-card-important">
-              <h3>Report Explanation</h3>
+              <h3>{t("reports_report_explanation")}</h3>
               <p className="report-text">
                 {formatReportText(
                   result.plain_language_summary?.detailed_explanation,
@@ -141,7 +125,7 @@ function Reports() {
             </article>
 
             <article className="interpret-card interpret-card-wide interpret-card-standard">
-              <h3>Key Findings Explained</h3>
+              <h3>{t("reports_key_findings")}</h3>
               {result.key_findings_explained?.length ? (
                 <ul>
                   {result.key_findings_explained.map((finding, idx) => (
@@ -152,12 +136,12 @@ function Reports() {
                   ))}
                 </ul>
               ) : (
-                <p>No key findings were returned.</p>
+                <p>{t("reports_no_findings")}</p>
               )}
             </article>
 
             <article className="interpret-card interpret-card-important">
-              <h3>What This Means For You</h3>
+              <h3>{t("reports_what_this_means")}</h3>
               <p className="report-text">
                 {formatReportText(
                   result.what_this_means_for_you?.what_patients_often_do_next,
@@ -171,7 +155,7 @@ function Reports() {
             </article>
 
             <article className="interpret-card interpret-card-followup">
-              <h3>Follow-up Context</h3>
+              <h3>{t("reports_follow_up")}</h3>
               <p className="report-text">
                 {formatReportText(
                   result.lifestyle_and_followup_context
@@ -186,7 +170,7 @@ function Reports() {
             </article>
 
             <article className="interpret-card interpret-card-wide interpret-card-followup">
-              <h3>Questions To Ask Your Doctor</h3>
+              <h3>{t("reports_questions")}</h3>
               {result.questions_to_ask_your_doctor?.length ? (
                 <ul>
                   {result.questions_to_ask_your_doctor.map((question) => (
@@ -194,7 +178,7 @@ function Reports() {
                   ))}
                 </ul>
               ) : (
-                <p>No suggested questions were returned.</p>
+                <p>{t("reports_no_questions")}</p>
               )}
             </article>
           </div>
