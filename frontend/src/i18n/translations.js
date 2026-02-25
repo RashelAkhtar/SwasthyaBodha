@@ -8,6 +8,11 @@ export const translations = {
     nav_reports: "Report Summary",
     nav_language_label: "Language",
     nav_scroll_down: "Scroll Down",
+    voice_play: "Voice Output",
+    voice_stop: "Stop Voice",
+    voice_loading: "Generating Voice...",
+    voice_failed: "Voice output failed. Please try again.",
+    voice_not_supported: "Voice output is not supported in this browser.",
 
     home_kicker: "Radiology Workflow Assistant",
     home_title: "Fast, structured radiology review with patient-ready output",
@@ -80,6 +85,11 @@ export const translations = {
     nav_reports: "रिपोर्ट सारांश",
     nav_language_label: "भाषा",
     nav_scroll_down: "नीचे स्क्रॉल करें",
+    voice_play: "आवाज़ आउटपुट",
+    voice_stop: "आवाज़ बंद करें",
+    voice_loading: "आवाज़ बनाई जा रही है...",
+    voice_failed: "आवाज़ आउटपुट विफल हुआ। कृपया फिर से प्रयास करें।",
+    voice_not_supported: "इस ब्राउज़र में आवाज़ आउटपुट समर्थित नहीं है।",
 
     home_kicker: "रेडियोलॉजी वर्कफ़्लो सहायक",
     home_title: "तेज़ और संरचित रेडियोलॉजी समीक्षा, रोगी के लिए स्पष्ट आउटपुट के साथ",
@@ -152,6 +162,11 @@ export const translations = {
     nav_reports: "ৰিপৰ্ট সাৰাংশ",
     nav_language_label: "ভাষা",
     nav_scroll_down: "তললৈ স্ক্ৰ'ল কৰক",
+    voice_play: "ভইচ আউটপুট",
+    voice_stop: "ভইচ বন্ধ কৰক",
+    voice_loading: "ভইচ প্রস্তুত কৰা হৈছে...",
+    voice_failed: "ভইচ আউটপুট ব্যর্থ হ'ল। পুনৰ চেষ্টা কৰক।",
+    voice_not_supported: "এই ব্রাউজাৰত ভইচ আউটপুট সমৰ্থিত নহয়।",
 
     home_kicker: "ৰেডিঅ'লজি ৱৰ্কফ্ল' সহায়ক",
     home_title: "দ্ৰুত, সুশৃংখল ৰেডিঅ'লজি পৰ্যালোচনা, ৰোগী-বান্ধৱ আউটপুটসহ",
@@ -219,4 +234,3 @@ export const translations = {
     reports_no_questions: "কোনো প্ৰস্তাবিত প্ৰশ্ন পোৱা নগ'ল।",
   },
 };
-

@@ -3,6 +3,7 @@ import axios from "axios";
 import "../styles/XRay.css";
 import { formatReportText } from "../utils/textFormatting";
 import { useLanguage } from "../context/LanguageContext";
+import VoiceOutputToggle from "../components/VoiceOutputToggle";
 
 function XRay() {
   const { language, t } = useLanguage();
@@ -47,6 +48,38 @@ function XRay() {
 
     setLoading(false);
   };
+
+  const voiceNarration = result
+    ? [
+        `${t("xray_emergency_title")}.`,
+        result.critical_findings?.length
+          ? result.critical_findings.join(". ")
+          : t("xray_no_critical"),
+        `${t("xray_urgent_care")} ${formatReportText(
+          result.what_this_means_for_you?.when_to_seek_urgent_care_general,
+        )}`,
+        `${t("xray_report_explanation")}. ${formatReportText(
+          result.plain_language_summary?.detailed_explanation,
+        )}`,
+        `${t("xray_what_this_means")}. ${formatReportText(
+          result.what_this_means_for_you?.what_patients_often_do_next,
+        )} ${formatReportText(
+          result.what_this_means_for_you?.monitoring_general_advice,
+        )}`,
+        `${t("xray_follow_up")}. ${formatReportText(
+          result.lifestyle_and_followup_context?.general_lifestyle_considerations,
+        )} ${formatReportText(
+          result.lifestyle_and_followup_context?.importance_of_followup,
+        )}`,
+        `${t("xray_questions")}. ${
+          result.questions_to_ask_your_doctor?.length
+            ? result.questions_to_ask_your_doctor.join(". ")
+            : t("xray_no_questions")
+        }`,
+      ]
+        .filter(Boolean)
+        .join(" ")
+    : "";
 
   return (
     <section className="analyze-page">
@@ -102,6 +135,12 @@ function XRay() {
         <header className="analyze-header">
           <h2>{t("xray_output_title")}</h2>
           <p>{t("xray_output_subtitle")}</p>
+          <VoiceOutputToggle
+            className="analyze-voice-btn"
+            text={voiceNarration}
+            language={language}
+            t={t}
+          />
         </header>
 
         {!result && !loading && (

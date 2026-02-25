@@ -25,6 +25,34 @@
   font-size: 0.9rem;
 }
 
+.interpret-voice-btn {
+  margin-top: 12px;
+  border: 1px solid #b7cfde;
+  border-radius: 10px;
+  background: #eef7fc;
+  color: #0c628d;
+  font-family: inherit;
+  font-size: 0.84rem;
+  font-weight: 800;
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+.interpret-voice-btn:hover:not(:disabled) {
+  background: #e0f0fa;
+}
+
+.interpret-voice-btn:disabled {
+  opacity: 0.62;
+  cursor: not-allowed;
+}
+
+.voice-unsupported {
+  margin: 10px 0 0;
+  color: var(--app-muted);
+  font-size: 0.84rem;
+}
+
 .interpret-label {
   display: block;
   margin: 16px 0 8px;

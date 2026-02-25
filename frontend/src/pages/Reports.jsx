@@ -3,6 +3,7 @@ import axios from "axios";
 import "../styles/Reports.css";
 import { formatReportText } from "../utils/textFormatting";
 import { useLanguage } from "../context/LanguageContext";
+import VoiceOutputToggle from "../components/VoiceOutputToggle";
 
 function Reports() {
   const { language, t } = useLanguage();
@@ -48,6 +49,41 @@ function Reports() {
     }
   };
 
+  const voiceNarration = result
+    ? [
+        `${t("reports_emergency_title")}. ${t("reports_urgent_care")} ${formatReportText(
+          result.what_this_means_for_you?.when_to_seek_urgent_care_general,
+        )}`,
+        `${t("reports_report_explanation")}. ${formatReportText(
+          result.plain_language_summary?.detailed_explanation,
+        )}`,
+        `${t("reports_key_findings")}. ${
+          result.key_findings_explained?.length
+            ? result.key_findings_explained
+                .map((finding) => `${finding.original_term}: ${finding.what_it_means}`)
+                .join(". ")
+            : t("reports_no_findings")
+        }`,
+        `${t("reports_what_this_means")}. ${formatReportText(
+          result.what_this_means_for_you?.what_patients_often_do_next,
+        )} ${formatReportText(
+          result.what_this_means_for_you?.monitoring_general_advice,
+        )}`,
+        `${t("reports_follow_up")}. ${formatReportText(
+          result.lifestyle_and_followup_context?.general_lifestyle_considerations,
+        )} ${formatReportText(
+          result.lifestyle_and_followup_context?.importance_of_followup,
+        )}`,
+        `${t("reports_questions")}. ${
+          result.questions_to_ask_your_doctor?.length
+            ? result.questions_to_ask_your_doctor.join(". ")
+            : t("reports_no_questions")
+        }`,
+      ]
+        .filter(Boolean)
+        .join(" ")
+    : "";
+
   return (
     <section className="interpret-page">
       <section className="interpret-pane interpret-pane-input">
@@ -90,6 +126,12 @@ function Reports() {
       <section className="interpret-pane interpret-pane-output">
         <header className="interpret-header">
           <h2>{t("reports_output_title")}</h2>
+          <VoiceOutputToggle
+            className="interpret-voice-btn"
+            text={voiceNarration}
+            language={language}
+            t={t}
+          />
         </header>
 
         {!result && !loading && (

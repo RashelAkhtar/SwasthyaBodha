@@ -7,6 +7,7 @@ import { v4 as uuidv4 } from "uuid";
 import { analyzeReport } from "./services/geminiService.js";
 import { interpretForPatient } from "./services/patientService.js";
 import { extractTextFromBuffer } from "./services/textExtraction.js";
+import { generateVoiceAudio } from "./services/voiceService.js";
 
 dotenv.config();
 const PORT = process.env.PORT || 3000;
@@ -79,6 +80,23 @@ app.post("/interpret", upload.single("file"), async (req, res) => {
   } catch (err) {
     console.error("Interpretation ERROR:", err.message);
     res.status(500).json({ error: "Interpretation failed." });
+  }
+});
+
+app.post("/voice", async (req, res) => {
+  try {
+    const text = req.body?.text?.trim?.() || "";
+    const language = req.body?.language || "English";
+
+    if (!text) {
+      return res.status(400).json({ error: "Text is required for voice output." });
+    }
+
+    const audio = await generateVoiceAudio({ text, language });
+    res.json(audio);
+  } catch (err) {
+    console.error("Voice ERROR:", err.message);
+    res.status(500).json({ error: "Voice generation failed." });
   }
 });
 
