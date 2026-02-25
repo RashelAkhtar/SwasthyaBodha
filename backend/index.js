@@ -32,13 +32,14 @@ app.get("/health", (req, res) => {
 app.post("/analyze", upload.single("image"), async (req, res) => {
   try {
     const text = req.body.text || "";
+    const language = req.body.language || "English";
     const image = req.file || null;
 
     if (!text && !image) {
       return res.status(400).json({ error: "Provide at least image or text" });
     }
 
-    const result = await analyzeReport({ text, image });
+    const result = await analyzeReport({ text, image, language });
 
     res.json({
       id: uuidv4(),

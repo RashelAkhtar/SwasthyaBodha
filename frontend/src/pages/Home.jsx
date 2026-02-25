@@ -13,10 +13,10 @@ function Home() {
         </p>
 
         <div className="home-actions">
-          <Link className="home-btn home-btn-primary" to="/analyze">
+          <Link className="home-btn home-btn-primary" to="/xray">
             Start Analysis
           </Link>
-          <Link className="home-btn home-btn-ghost" to="/analyze-report">
+          <Link className="home-btn home-btn-ghost" to="/reports">
             Interpret Report
           </Link>
         </div>

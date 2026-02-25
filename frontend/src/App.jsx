@@ -1,8 +1,8 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "./styles/App.css";
 import Home from "./pages/Home";
-import Analyze from "./pages/Analyze";
-import AnalyzeReport from "./pages/AnalyzeReport";
+import XRay from "./pages/XRay";
+import Reports from "./pages/Reports";
 import Navbar from "./components/Navbar";
 
 function App() {
@@ -13,8 +13,8 @@ function App() {
         <main className="app-content">
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/analyze" element={<Analyze />} />
-            <Route path="/analyze-report" element={<AnalyzeReport />} />
+            <Route path="/xray" element={<XRay />} />
+            <Route path="/reports" element={<Reports />} />
           </Routes>
         </main>
       </div>

@@ -25,20 +25,20 @@ function Navbar() {
             Home
           </NavLink>
           <NavLink
-            to="/analyze"
+            to="/xray"
             className={({ isActive }) =>
               `nav-menu-link ${isActive ? "is-active" : ""}`
             }
           >
-            Analyze
+            X-Ray Summary
           </NavLink>
           <NavLink
-            to="/analyze-report"
+            to="/reports"
             className={({ isActive }) =>
               `nav-menu-link ${isActive ? "is-active" : ""}`
             }
           >
-            Interpret
+            Report Summary
           </NavLink>
         </nav>
       </div>
