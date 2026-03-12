@@ -8,9 +8,9 @@ export default function Hero() {
     const [currentSlide, setCurrentSlide] = useState(0);
 
     const slides = [
-        { id: 1, src: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&q=80&w=800&h=600", alt: "Medical professional looking at digital tablet" },
-        { id: 2, src: "https://images.unsplash.com/photo-1551076805-e1869033e561?auto=format&fit=crop&q=80&w=800&h=600", alt: "Laboratory technician examining sample" },
-        { id: 3, src: "https://images.unsplash.com/photo-1631815587646-b85a1bb027e1?auto=format&fit=crop&q=80&w=800&h=600", alt: "Patient and doctor discussion" }
+        { id: 1, src: "../assets/images/home1.jpeg", fallback: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&q=80&w=800&h=600", alt: "Medical professional looking at digital tablet" },
+        { id: 2, src: "../assets/images/home2.jpeg", fallback: "https://images.unsplash.com/photo-1551076805-e1869033e561?auto=format&fit=crop&q=80&w=800&h=600", alt: "Laboratory technician examining sample" },
+        { id: 3, src: "../assets/images/home3.jpeg", fallback: "https://images.unsplash.com/photo-1631815587646-b85a1bb027e1?auto=format&fit=crop&q=80&w=800&h=600", alt: "Patient and doctor discussion" }
     ];
 
     useEffect(() => {
@@ -60,6 +60,11 @@ export default function Hero() {
                                     src={slide.src}
                                     alt={slide.alt}
                                     className={styles.slideImage}
+                                    onError={(e) => {
+                                        if (e.target.src !== slide.fallback) {
+                                            e.target.src = slide.fallback;
+                                        }
+                                    }}
                                 />
                             </div>
                         ))}
